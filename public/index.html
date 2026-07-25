@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JRFER | Jesse Jin</title>
+  <meta name="description" content="Jesse Jin — reach out at info@jrfer.com for business inquiries, partnerships, and collaboration.">
+  <meta name="theme-color" content="#141210">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4ede4;
+      --bg-deep: #e5d5c0;
+      --panel: rgba(255, 250, 244, 0.74);
+      --panel-border: rgba(40, 29, 17, 0.10);
+      --ink: #191614;
+      --muted: #685d54;
+      --accent: #b8572e;
+      --accent-glow: rgba(184, 87, 46, 0.18);
+      --shadow: 0 30px 90px rgba(71, 43, 19, 0.16);
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; margin: 0; }
+
+    html { min-height: 100%; }
+
+    body {
+      min-height: 100vh;
+      font-family: "Space Grotesk", "Avenir Next", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 20%, rgba(255,255,255,0.88), transparent 25%),
+        radial-gradient(circle at 85% 15%, rgba(219,120,76,0.22), transparent 22%),
+        radial-gradient(circle at 80% 80%, rgba(120,91,56,0.16), transparent 20%),
+        linear-gradient(135deg, var(--bg) 0%, #f0e5d7 52%, var(--bg-deep) 100%);
+      overflow-x: hidden;
+    }
+
+    /* subtle grid texture */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(30,22,16,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30,22,16,0.035) 1px, transparent 1px);
+      background-size: 46px 46px;
+      mask-image: radial-gradient(circle at center, black 35%, transparent 78%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* floating orbs */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(10px);
+      opacity: 0.8;
+      pointer-events: none;
+      will-change: transform;
+    }
+    .orb-one {
+      width: 280px; height: 280px;
+      top: -60px; right: 8vw;
+      background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.92), rgba(184,87,46,0.16));
+      animation: drift 16s ease-in-out infinite;
+    }
+    .orb-two {
+      width: 220px; height: 220px;
+      left: -40px; bottom: 8vh;
+      background: radial-gradient(circle at 50% 50%, rgba(255,233,214,0.94), rgba(70,45,24,0.08));
+      animation: drift 16s ease-in-out infinite -6s;
+    }
+
+    /* ───── layout ───── */
+    .page {
+      position: relative;
+      min-height: 100vh;
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    .card {
+      width: min(1100px, 100%);
+      padding: 28px;
+      border-radius: calc(var(--radius) + 8px);
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+    }
+
+    /* ───── entrance animations ───── */
+    .card { animation: cardIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .brand { animation: fadeSlide 0.6s ease both 0.15s; }
+    .eyebrow { animation: fadeSlide 0.5s ease both 0.25s; }
+    h1 { animation: fadeSlide 0.6s ease both 0.35s; }
+    h1 .accent-dot { animation: dotPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both 0.85s; }
+    .lead { animation: fadeSlide 0.5s ease both 0.5s; }
+    .contact-panel { animation: panelIn 0.65s cubic-bezier(0.22, 1, 0.36, 1) both 0.4s; }
+    .footer-bar { animation: fadeSlide 0.5s ease both 0.7s; }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(24px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes panelIn {
+      from { opacity: 0; transform: translateY(18px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes dotPop {
+      from { opacity: 0; transform: scale(0); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes drift {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(0, 18px, 0) scale(1.04); }
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+      50% { box-shadow: 0 0 0 8px transparent; }
+    }
+
+    /* ───── brand pill ───── */
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.58);
+      border: 1px solid rgba(25,22,20,0.08);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .brand-mark {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #d6784c, #7d4325);
+      box-shadow: 0 0 0 6px rgba(184,87,46,0.12);
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    /* ───── hero grid ───── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.25fr 0.9fr;
+      gap: 28px;
+      margin-top: 26px;
+    }
+    .copy { padding: 20px 12px 20px 6px; }
+
+    .eyebrow {
+      color: var(--accent);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.82rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      max-width: 12ch;
+      font-size: clamp(3rem, 8vw, 6.2rem);
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+    }
+    .accent-dot {
+      display: inline-block;
+      color: var(--accent);
+    }
+
+    .lead {
+      max-width: 34rem;
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.3vw, 1.16rem);
+      line-height: 1.7;
+    }
+
+    /* ───── contact panel ───── */
+    .contact-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 22px;
+      padding: 28px;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,247,239,0.9)),
+        linear-gradient(145deg, rgba(216,154,120,0.2), transparent 60%);
+      border: 1px solid rgba(27,20,16,0.08);
+      min-height: 100%;
+    }
+
+    .panel-label {
+      font-family: "IBM Plex Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.74rem;
+      color: var(--muted);
+    }
+
+    .status-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .status-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #3a9a5c;
+      box-shadow: 0 0 0 3px rgba(58,154,92,0.18);
+      animation: pulse-green 2.5s ease-in-out infinite;
+    }
+    @keyframes pulse-green {
+      0%, 100% { box-shadow: 0 0 0 3px rgba(58,154,92,0.18); }
+      50% { box-shadow: 0 0 0 6px rgba(58,154,92,0); }
+    }
+    .status-text {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* email CTA */
+    .email-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      padding: 22px 20px;
+      border-radius: 22px;
+      text-decoration: none;
+      color: #fff9f4;
+      background: linear-gradient(135deg, #141210, #2c1d14 60%, #8b4b2b 130%);
+      box-shadow: 0 16px 34px rgba(58,33,15,0.24);
+      font-size: clamp(1.15rem, 2vw, 1.45rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 220ms ease, filter 220ms ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .email-cta::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.06) 100%);
+      opacity: 0;
+      transition: opacity 220ms ease;
+    }
+    .email-cta:hover::before { opacity: 1; }
+    .email-cta:hover, .email-cta:focus-visible {
+      transform: translateY(-3px);
+      box-shadow: 0 22px 48px rgba(58,33,15,0.34);
+    }
+    .email-cta:active {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 28px rgba(58,33,15,0.28);
+    }
+    .email-cta:focus-visible {
+      outline: 3px solid rgba(184,87,46,0.35);
+      outline-offset: 4px;
+    }
+    .email-cta .arrow {
+      display: inline-block;
+      transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+      font-size: 0.85em;
+    }
+    .email-cta:hover .arrow { transform: translateX(4px); }
+
+    /* copy button */
+    .copy-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      border: 1px solid rgba(25,22,20,0.10);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.5);
+      color: var(--muted);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 180ms ease;
+    }
+    .copy-btn:hover {
+      background: rgba(255,255,255,0.8);
+      color: var(--ink);
+      border-color: rgba(25,22,20,0.16);
+    }
+    .copy-btn svg { width: 13px; height: 13px; }
+
+    /* ───── footer ───── */
+    .footer-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(25,22,20,0.08);
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+    .footer-bar strong { color: var(--ink); font-weight: 500; }
+    .footer-links {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+    }
+
+    /* ───── responsive ───── */
+    @media (max-width: 860px) {
+      .page { padding: 18px; }
+      .card { padding: 18px; }
+      .hero { grid-template-columns: 1fr; }
+      .copy { padding: 10px 4px 0; }
+      h1 { max-width: none; }
+      .footer-bar { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="orb orb-one" aria-hidden="true"></div>
+  <div class="orb orb-two" aria-hidden="true"></div>
+
+  <div class="page">
+    <main class="card">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>jrfer.com</span>
+      </div>
+
+      <section class="hero">
+        <div class="copy">
+          <p class="eyebrow">Get in touch</p>
+          <h1>Jesse Jin<span class="accent-dot">.</span></h1>
+          <p class="lead">
+            Business inquiries, partnerships, collaborations — drop a line and I'll get back to you.
+          </p>
+        </div>
+
+        <aside class="contact-panel" aria-label="Contact">
+          <div>
+            <p class="panel-label">Email</p>
+            <div class="status-row">
+              <span class="status-dot" aria-hidden="true"></span>
+              <span class="status-text">Accepting inquiries</span>
+            </div>
+          </div>
+
+          <a class="email-cta" href="mailto:info@jrfer.com">
+            <span>info@jrfer.com</span>
+            <span class="arrow" aria-hidden="true">&#8594;</span>
+          </a>
+
+          <div class="copy-row">
+            <span class="status-text" style="opacity:0.7">Replies within 48 hrs</span>
+            <button class="copy-btn" onclick="copyEmail()" aria-label="Copy email address">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              <span id="copy-label">Copy</span>
+            </button>
+          </div>
+        </aside>
+      </section>
+
+      <div class="footer-bar">
+        <span><strong>JRFER</strong> &mdash; Jesse Jin</span>
+        <div class="footer-links">
+          <span>Hong Kong</span>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function copyEmail() {
+      navigator.clipboard.writeText('info@jrfer.com').then(function() {
+        var label = document.getElementById('copy-label');
+        label.textContent = 'Copied';
+        setTimeout(function() { label.textContent = 'Copy'; }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>
